@@ -2,11 +2,14 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 import { ArrowRight } from 'lucide-react';
+import useEmblaCarousel from 'embla-carousel-react';
+import Autoplay from 'embla-carousel-autoplay';
 
 const HeroSection = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
   
   useEffect(() => {
     setIsVisible(true);
@@ -19,50 +22,93 @@ const HeroSection = () => {
     "https://images.unsplash.com/photo-1605810230434-7631ac76ec81?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
   ];
   
+  // Using Embla Carousel with autoplay plugin
+  const [emblaRef, emblaApi] = useEmblaCarousel({ 
+    loop: true, 
+    align: 'start' 
+  }, [Autoplay({ delay: 5000, stopOnInteraction: false })]);
+  
+  useEffect(() => {
+    if (emblaApi) {
+      // Update the active index when slide changes
+      const onSelect = () => {
+        setActiveIndex(emblaApi.selectedScrollSnap());
+      };
+      
+      emblaApi.on('select', onSelect);
+      return () => {
+        emblaApi.off('select', onSelect);
+      };
+    }
+  }, [emblaApi]);
+  
   return (
     <div className="relative min-h-screen flex flex-col justify-center overflow-hidden">
-      {/* Enhanced Animated Background Elements */}
+      {/* Abstract Background Elements */}
       <div className="absolute top-0 left-0 right-0 bottom-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-[10%] right-[15%] w-64 h-64 bg-gradient-blue rounded-full blur-3xl opacity-20 floating-animation" />
-        <div className="absolute bottom-[20%] left-[10%] w-80 h-80 bg-gradient-cyan rounded-full blur-3xl opacity-20 floating-animation" style={{ animationDelay: '2s' }} />
-        <div className="absolute top-[40%] left-[25%] w-40 h-40 bg-gradient-blue rounded-full blur-3xl opacity-10 pulse-animation" style={{ animationDelay: '1s' }} />
-        <div className="absolute bottom-[40%] right-[20%] w-48 h-48 bg-gradient-cyan rounded-full blur-3xl opacity-10 pulse-animation" style={{ animationDelay: '3s' }} />
+        {/* Abstract geometric shapes */}
+        <div className="absolute top-[10%] right-[15%] w-[40vw] h-[40vh] bg-gradient-to-r from-blue-500/30 to-cyan-400/30 rounded-full blur-[100px] opacity-20 transform rotate-12 animate-pulse" />
+        <div className="absolute bottom-[20%] left-[10%] w-[50vw] h-[30vh] bg-gradient-to-r from-cyan-500/30 to-blue-600/30 rounded-full blur-[100px] opacity-20 transform -rotate-12 animate-pulse" style={{ animationDelay: '2s' }} />
         
-        {/* Enhanced animated particles */}
-        <div className="absolute top-0 left-0 right-0 bottom-0">
-          {[...Array(20)].map((_, i) => (
-            <div 
-              key={i}
-              className="absolute rounded-full bg-white opacity-30"
-              style={{
-                width: `${Math.random() * 8 + 2}px`,
-                height: `${Math.random() * 8 + 2}px`,
-                top: `${Math.random() * 100}%`,
-                left: `${Math.random() * 100}%`,
-                animation: `floating ${Math.random() * 15 + 5}s ease-in-out infinite`,
-                animationDelay: `${Math.random() * 5}s`
-              }}
-            />
-          ))}
+        {/* Transformative flowing elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="flow-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="rgba(59, 130, 246, 0.1)"/>
+                <stop offset="50%" stopColor="rgba(6, 182, 212, 0.1)"/>
+                <stop offset="100%" stopColor="rgba(59, 130, 246, 0.1)"/>
+              </linearGradient>
+            </defs>
+            <path 
+              d="M0,128 C320,213.3 320,42.7 640,128 C960,213.3 960,42.7 1280,128 L1280,533.3 C960,448 960,618.7 640,533.3 C320,448 320,618.7 0,533.3 Z" 
+              fill="url(#flow-gradient)"
+              opacity="0.3"
+              transform="translate(0, -100)"
+            >
+              <animateTransform 
+                attributeName="transform" 
+                attributeType="XML" 
+                type="translate" 
+                from="0 -100" 
+                to="0 1000" 
+                dur="30s" 
+                repeatCount="indefinite"
+              />
+            </path>
+            <path 
+              d="M0,128 C320,213.3 320,42.7 640,128 C960,213.3 960,42.7 1280,128 L1280,533.3 C960,448 960,618.7 640,533.3 C320,448 320,618.7 0,533.3 Z" 
+              fill="url(#flow-gradient)"
+              opacity="0.3"
+              transform="translate(0, -400)"
+            >
+              <animateTransform 
+                attributeName="transform" 
+                attributeType="XML" 
+                type="translate" 
+                from="0 -400" 
+                to="0 700" 
+                dur="40s" 
+                repeatCount="indefinite"
+              />
+            </path>
+          </svg>
         </div>
         
-        {/* Add floating data points and lines */}
-        <div className="absolute top-0 left-0 right-0 bottom-0 overflow-hidden opacity-20">
-          {[...Array(5)].map((_, i) => (
-            <div 
-              key={`data-${i}`}
-              className="absolute bg-gradient-blue p-2 rounded-lg"
-              style={{
-                top: `${20 + Math.random() * 60}%`,
-                left: `${10 + Math.random() * 80}%`,
-                animation: `floating ${10 + Math.random() * 8}s ease-in-out infinite`,
-                animationDelay: `${Math.random() * 5}s`
-              }}
-            >
-              <div className="h-2 w-8 bg-white/70 rounded-full"></div>
-              <div className="h-2 w-6 bg-white/70 rounded-full mt-1"></div>
-            </div>
-          ))}
+        {/* Direction-oriented lines */}
+        <div className="absolute top-0 left-0 right-0 bottom-0 overflow-hidden opacity-10">
+          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="direction-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="rgba(59, 130, 246, 0)"/>
+                <stop offset="50%" stopColor="rgba(59, 130, 246, 0.5)"/>
+                <stop offset="100%" stopColor="rgba(59, 130, 246, 0)"/>
+              </linearGradient>
+            </defs>
+            <line x1="0" y1="25%" x2="100%" y2="40%" stroke="url(#direction-gradient)" strokeWidth="1" />
+            <line x1="0" y1="45%" x2="100%" y2="35%" stroke="url(#direction-gradient)" strokeWidth="1" />
+            <line x1="0" y1="65%" x2="100%" y2="75%" stroke="url(#direction-gradient)" strokeWidth="1" />
+          </svg>
         </div>
       </div>
       
@@ -95,6 +141,12 @@ const HeroSection = () => {
                 Explore Features
               </Button>
             </div>
+
+            <div className="py-4">
+              <p className="text-sm text-primary font-medium">
+                Ready for institutional accreditation requirements
+              </p>
+            </div>
           </div>
           
           <div className={cn(
@@ -118,28 +170,42 @@ const HeroSection = () => {
               <div className="bg-card rounded-xl overflow-hidden relative">
                 <div className="absolute top-0 left-0 right-0 bottom-0 pointer-events-none shimmer-animation"></div>
                 
-                <Carousel className="overflow-hidden"
-                  opts={{
-                    align: "start",
-                    loop: true,
-                  }}
-                >
-                  <CarouselContent>
+                {/* Swipeable auto-play carousel */}
+                <div className="relative" ref={emblaRef}>
+                  <div className="flex">
                     {images.map((image, index) => (
-                      <CarouselItem key={index} className="p-0">
+                      <div key={index} className="relative flex-[0_0_100%]">
                         <img 
                           src={image} 
                           alt={`Analytics Dashboard ${index + 1}`} 
                           className="w-full h-auto object-cover aspect-video"
                         />
-                      </CarouselItem>
+                      </div>
                     ))}
-                  </CarouselContent>
-                  <div className="flex justify-center gap-1 mt-2 p-2">
-                    <CarouselPrevious className="static h-8 w-8 translate-y-0" />
-                    <CarouselNext className="static h-8 w-8 translate-y-0" />
                   </div>
-                </Carousel>
+                  
+                  {/* Dots navigation */}
+                  <div className="flex justify-center gap-2 mt-4 pb-2">
+                    {images.map((_, index) => (
+                      <button
+                        key={index}
+                        className={`w-2 h-2 rounded-full transition-all ${
+                          activeIndex === index 
+                            ? "w-4 bg-primary" 
+                            : "bg-gray-300"
+                        }`}
+                        onClick={() => emblaApi?.scrollTo(index)}
+                        aria-label={`Go to slide ${index + 1}`}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="absolute -right-4 top-1/3 transform rotate-12">
+              <div className="bg-gradient-to-r from-blue-500/20 to-cyan-400/20 rounded-lg p-2 backdrop-blur-sm shadow-lg">
+                <p className="text-xs font-medium text-blue-800">Ready for accreditation</p>
               </div>
             </div>
           </div>

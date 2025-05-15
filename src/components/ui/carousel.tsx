@@ -14,7 +14,7 @@ type CarouselPlugin = UseCarouselParameters[1]
 
 type CarouselProps = {
   opts?: CarouselOptions
-  plugins?: CarouselPlugin
+  plugins?: CarouselPlugin[]
   orientation?: "horizontal" | "vertical"
   setApi?: (api: CarouselApi) => void
 }
@@ -124,6 +124,7 @@ const Carousel = React.forwardRef<
           carouselRef,
           api: api,
           opts,
+          plugins, // Make plugins available in context
           orientation:
             orientation || (opts?.axis === "y" ? "vertical" : "horizontal"),
           scrollPrev,
@@ -250,6 +251,40 @@ const CarouselNext = React.forwardRef<
 })
 CarouselNext.displayName = "CarouselNext"
 
+// Add a dots component for better navigation
+const CarouselDots = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement> & { 
+    itemCount: number;
+    activeIndex: number;
+    onDotClick?: (index: number) => void;
+  }
+>(({ className, itemCount, activeIndex, onDotClick, ...props }, ref) => {
+  return (
+    <div 
+      ref={ref} 
+      className={cn("flex justify-center gap-2 mt-4", className)}
+      {...props}
+    >
+      {Array.from({ length: itemCount }).map((_, index) => (
+        <button
+          key={index}
+          type="button"
+          className={cn(
+            "w-2 h-2 rounded-full transition-all",
+            activeIndex === index 
+              ? "w-4 bg-primary" 
+              : "bg-primary/30"
+          )}
+          onClick={() => onDotClick && onDotClick(index)}
+          aria-label={`Go to slide ${index + 1}`}
+        />
+      ))}
+    </div>
+  )
+})
+CarouselDots.displayName = "CarouselDots"
+
 export {
   type CarouselApi,
   Carousel,
@@ -257,4 +292,5 @@ export {
   CarouselItem,
   CarouselPrevious,
   CarouselNext,
+  CarouselDots
 }
