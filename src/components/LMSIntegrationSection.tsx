@@ -1,7 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 import { ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import useEmblaCarousel from 'embla-carousel-react';
@@ -80,20 +79,21 @@ const LMSIntegration = () => {
   
   return (
     <section id="lms-integration" className="py-20 relative overflow-hidden">
-      {/* Abstract background */}
+      {/* Abstract background with upward/northeast direction */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-accent/5"></div>
         
-        {/* Flowing lines representing integration/connections */}
+        {/* Upward trending lines representing growth and analytics */}
         <svg width="100%" height="100%" className="absolute inset-0 opacity-10" xmlns="http://www.w3.org/2000/svg">
           <defs>
-            <linearGradient id="connection-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <linearGradient id="connection-gradient" x1="0%" y1="100%" x2="100%" y2="0%">
               <stop offset="0%" stopColor="rgba(59, 130, 246, 0)" />
               <stop offset="50%" stopColor="rgba(59, 130, 246, 0.5)" />
               <stop offset="100%" stopColor="rgba(59, 130, 246, 0)" />
             </linearGradient>
           </defs>
-          <path d="M0,100 C150,180 350,20 500,100 C650,180 850,20 1000,100 C1150,180 1350,20 1500,100" 
+          {/* Upward/Northeast trending line 1 */}
+          <path d="M0,600 Q250,500 500,400 T1000,200 T1500,0" 
             fill="none" 
             stroke="url(#connection-gradient)" 
             strokeWidth="1">
@@ -102,13 +102,14 @@ const LMSIntegration = () => {
               dur="20s" 
               repeatCount="indefinite"
               values="
-                M0,100 C150,180 350,20 500,100 C650,180 850,20 1000,100 C1150,180 1350,20 1500,100;
-                M0,100 C150,20 350,180 500,100 C650,20 850,180 1000,100 C1150,20 1350,180 1500,100;
-                M0,100 C150,180 350,20 500,100 C650,180 850,20 1000,100 C1150,180 1350,20 1500,100
+                M0,600 Q250,500 500,400 T1000,200 T1500,0;
+                M0,550 Q250,450 500,350 T1000,150 T1500,-50;
+                M0,600 Q250,500 500,400 T1000,200 T1500,0
               "
             />
           </path>
-          <path d="M0,300 C150,380 350,220 500,300 C650,380 850,220 1000,300 C1150,380 1350,220 1500,300" 
+          {/* Upward/Northeast trending line 2 */}
+          <path d="M-400,800 Q0,600 400,400 T1200,0 T2000,-400" 
             fill="none" 
             stroke="url(#connection-gradient)" 
             strokeWidth="1">
@@ -117,12 +118,16 @@ const LMSIntegration = () => {
               dur="25s" 
               repeatCount="indefinite"
               values="
-                M0,300 C150,380 350,220 500,300 C650,380 850,220 1000,300 C1150,380 1350,220 1500,300;
-                M0,300 C150,220 350,380 500,300 C650,220 850,380 1000,300 C1150,220 1350,380 1500,300;
-                M0,300 C150,380 350,220 500,300 C650,380 850,220 1000,300 C1150,380 1350,220 1500,300
+                M-400,800 Q0,600 400,400 T1200,0 T2000,-400;
+                M-400,750 Q0,550 400,350 T1200,-50 T2000,-450;
+                M-400,800 Q0,600 400,400 T1200,0 T2000,-400
               "
             />
           </path>
+          {/* Short ascending trend lines */}
+          <path d="M100,500 L300,300" stroke="url(#connection-gradient)" strokeWidth="0.5" />
+          <path d="M500,600 L700,400" stroke="url(#connection-gradient)" strokeWidth="0.5" />
+          <path d="M900,500 L1100,300" stroke="url(#connection-gradient)" strokeWidth="0.5" />
         </svg>
       </div>
       
@@ -215,9 +220,9 @@ const LMSIntegration = () => {
           </Button>
         </div>
         
-        {/* Accreditation callout */}
+        {/* Accreditation callout - Moved below the carousel */}
         <div className={cn(
-          "max-w-2xl mx-auto mt-16 p-6 border border-primary/20 rounded-xl bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-blue-950/20 dark:to-cyan-950/20 transition-all duration-700 delay-700 transform",
+          "max-w-2xl mx-auto mt-16 p-6 border border-primary/20 rounded-xl bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-blue-950/20 dark:to-cyan-950/20 transition-all duration-700 delay-700 shadow-md",
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
         )}>
           <div className="flex flex-col md:flex-row items-center gap-4">
