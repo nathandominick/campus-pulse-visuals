@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+import { ArrowRight } from 'lucide-react';
 
 const HeroSection = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -10,18 +12,25 @@ const HeroSection = () => {
     setIsVisible(true);
   }, []);
   
+  const images = [
+    "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80",
+    "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80",
+    "https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80",
+    "https://images.unsplash.com/photo-1605810230434-7631ac76ec81?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
+  ];
+  
   return (
     <div className="relative min-h-screen flex flex-col justify-center overflow-hidden">
-      {/* Animated Background Elements */}
+      {/* Enhanced Animated Background Elements */}
       <div className="absolute top-0 left-0 right-0 bottom-0 pointer-events-none overflow-hidden">
         <div className="absolute top-[10%] right-[15%] w-64 h-64 bg-gradient-blue rounded-full blur-3xl opacity-20 floating-animation" />
         <div className="absolute bottom-[20%] left-[10%] w-80 h-80 bg-gradient-cyan rounded-full blur-3xl opacity-20 floating-animation" style={{ animationDelay: '2s' }} />
         <div className="absolute top-[40%] left-[25%] w-40 h-40 bg-gradient-blue rounded-full blur-3xl opacity-10 pulse-animation" style={{ animationDelay: '1s' }} />
         <div className="absolute bottom-[40%] right-[20%] w-48 h-48 bg-gradient-cyan rounded-full blur-3xl opacity-10 pulse-animation" style={{ animationDelay: '3s' }} />
         
-        {/* Add animated particles */}
+        {/* Enhanced animated particles */}
         <div className="absolute top-0 left-0 right-0 bottom-0">
-          {[...Array(10)].map((_, i) => (
+          {[...Array(20)].map((_, i) => (
             <div 
               key={i}
               className="absolute rounded-full bg-white opacity-30"
@@ -34,6 +43,25 @@ const HeroSection = () => {
                 animationDelay: `${Math.random() * 5}s`
               }}
             />
+          ))}
+        </div>
+        
+        {/* Add floating data points and lines */}
+        <div className="absolute top-0 left-0 right-0 bottom-0 overflow-hidden opacity-20">
+          {[...Array(5)].map((_, i) => (
+            <div 
+              key={`data-${i}`}
+              className="absolute bg-gradient-blue p-2 rounded-lg"
+              style={{
+                top: `${20 + Math.random() * 60}%`,
+                left: `${10 + Math.random() * 80}%`,
+                animation: `floating ${10 + Math.random() * 8}s ease-in-out infinite`,
+                animationDelay: `${Math.random() * 5}s`
+              }}
+            >
+              <div className="h-2 w-8 bg-white/70 rounded-full"></div>
+              <div className="h-2 w-6 bg-white/70 rounded-full mt-1"></div>
+            </div>
           ))}
         </div>
       </div>
@@ -67,16 +95,6 @@ const HeroSection = () => {
                 Explore Features
               </Button>
             </div>
-            <div className="flex items-center gap-4 pt-6">
-              <div className="flex -space-x-3">
-                <div className="w-8 h-8 rounded-full bg-gradient-blue border-2 border-background flex items-center justify-center text-xs font-medium text-white">JD</div>
-                <div className="w-8 h-8 rounded-full bg-gradient-cyan border-2 border-background flex items-center justify-center text-xs font-medium text-white">SM</div>
-                <div className="w-8 h-8 rounded-full bg-gradient-blue border-2 border-background flex items-center justify-center text-xs font-medium text-white">KT</div>
-              </div>
-              <p className="text-sm text-muted-foreground">
-                Join <span className="font-medium text-foreground">30+ institutions</span> already using our platform
-              </p>
-            </div>
           </div>
           
           <div className={cn(
@@ -99,11 +117,29 @@ const HeroSection = () => {
               </div>
               <div className="bg-card rounded-xl overflow-hidden relative">
                 <div className="absolute top-0 left-0 right-0 bottom-0 pointer-events-none shimmer-animation"></div>
-                <img 
-                  src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80" 
-                  alt="Analytics Dashboard" 
-                  className="w-full h-auto object-cover"
-                />
+                
+                <Carousel className="overflow-hidden"
+                  opts={{
+                    align: "start",
+                    loop: true,
+                  }}
+                >
+                  <CarouselContent>
+                    {images.map((image, index) => (
+                      <CarouselItem key={index} className="p-0">
+                        <img 
+                          src={image} 
+                          alt={`Analytics Dashboard ${index + 1}`} 
+                          className="w-full h-auto object-cover aspect-video"
+                        />
+                      </CarouselItem>
+                    ))}
+                  </CarouselContent>
+                  <div className="flex justify-center gap-1 mt-2 p-2">
+                    <CarouselPrevious className="static h-8 w-8 translate-y-0" />
+                    <CarouselNext className="static h-8 w-8 translate-y-0" />
+                  </div>
+                </Carousel>
               </div>
             </div>
           </div>

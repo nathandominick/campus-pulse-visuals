@@ -1,61 +1,80 @@
 
 import React from 'react';
+import { Button } from '@/components/ui/button';
+import { Linkedin, Youtube } from 'lucide-react';
 
 const Footer = () => {
+  const currentYear = new Date().getFullYear();
+  
   return (
-    <footer className="bg-background border-t border-border/50">
-      <div className="container mx-auto px-6 md:px-12 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div className="md:col-span-1">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
-                <span className="text-white font-bold">E</span>
-              </div>
-              <span className="font-bold text-xl">EduMetrics</span>
-            </div>
-            <p className="text-muted-foreground text-sm">
-              Transforming education through data-driven insights and comprehensive analytics.
+    <footer className="bg-secondary pt-12 pb-6 relative overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none opacity-5">
+        {/* Background decoration */}
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent"></div>
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-primary/20 rounded-full blur-3xl"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-accent/20 rounded-full blur-3xl"></div>
+      </div>
+      
+      <div className="container mx-auto px-4 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+          <div>
+            <h3 className="font-bold text-lg mb-4">EduMetrics</h3>
+            <p className="text-muted-foreground mb-4">
+              Transforming education through comprehensive analytics and intelligent data integration.
             </p>
+            <div className="flex space-x-3">
+              <Button variant="ghost" size="icon" className="rounded-full hover:bg-primary/10 hover:text-primary">
+                <Linkedin className="h-5 w-5" />
+                <span className="sr-only">LinkedIn</span>
+              </Button>
+              <Button variant="ghost" size="icon" className="rounded-full hover:bg-primary/10 hover:text-primary">
+                <Youtube className="h-5 w-5" />
+                <span className="sr-only">YouTube</span>
+              </Button>
+            </div>
           </div>
           
           <div>
-            <h4 className="font-semibold text-sm uppercase tracking-wider mb-4">Company</h4>
+            <h3 className="font-bold text-lg mb-4">Solutions</h3>
             <ul className="space-y-2">
-              <li><a href="#about" className="text-muted-foreground hover:text-primary text-sm">About Us</a></li>
-              <li><a href="#" className="text-muted-foreground hover:text-primary text-sm">Team</a></li>
-              <li><a href="#" className="text-muted-foreground hover:text-primary text-sm">Careers</a></li>
-              <li><a href="#" className="text-muted-foreground hover:text-primary text-sm">Press</a></li>
+              <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">Analytics Dashboard</a></li>
+              <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">LMS Integration</a></li>
+              <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">Student Performance</a></li>
+              <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">Custom Reports</a></li>
             </ul>
           </div>
           
           <div>
-            <h4 className="font-semibold text-sm uppercase tracking-wider mb-4">Resources</h4>
+            <h3 className="font-bold text-lg mb-4">Company</h3>
             <ul className="space-y-2">
-              <li><a href="#" className="text-muted-foreground hover:text-primary text-sm">Blog</a></li>
-              <li><a href="#" className="text-muted-foreground hover:text-primary text-sm">Documentation</a></li>
-              <li><a href="#" className="text-muted-foreground hover:text-primary text-sm">Support</a></li>
-              <li><a href="#" className="text-muted-foreground hover:text-primary text-sm">Privacy Policy</a></li>
+              <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">About Us</a></li>
+              <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">Careers</a></li>
+              <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">Privacy Policy</a></li>
+              <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">Terms of Service</a></li>
             </ul>
           </div>
           
           <div>
-            <h4 className="font-semibold text-sm uppercase tracking-wider mb-4">Contact</h4>
+            <h3 className="font-bold text-lg mb-4">Get in Touch</h3>
             <ul className="space-y-2">
-              <li className="text-muted-foreground text-sm">contact@edumetrics.edu</li>
-              <li className="text-muted-foreground text-sm">(555) 123-4567</li>
-              <li className="text-muted-foreground text-sm">123 Education Ave<br />San Francisco, CA 94105</li>
+              <li><a href="#contact" className="text-muted-foreground hover:text-primary transition-colors">Contact Us</a></li>
+              <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">Support</a></li>
+              <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">Schedule a Demo</a></li>
+              <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">Knowledge Base</a></li>
             </ul>
           </div>
         </div>
         
-        <div className="border-t border-border/50 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-muted-foreground text-sm">
-            &copy; {new Date().getFullYear()} EduMetrics, Inc. All rights reserved.
-          </p>
-          <div className="flex space-x-6 mt-4 md:mt-0">
-            <a href="#" className="text-muted-foreground hover:text-primary text-sm">Terms</a>
-            <a href="#" className="text-muted-foreground hover:text-primary text-sm">Privacy</a>
-            <a href="#" className="text-muted-foreground hover:text-primary text-sm">Cookies</a>
+        <div className="pt-8 border-t border-border/40">
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <p className="text-sm text-muted-foreground mb-4 md:mb-0">
+              &copy; {currentYear} EduMetrics. All rights reserved.
+            </p>
+            <div className="flex space-x-6">
+              <a href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">Privacy</a>
+              <a href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">Terms</a>
+              <a href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">Cookies</a>
+            </div>
           </div>
         </div>
       </div>
